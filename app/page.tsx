@@ -1,101 +1,65 @@
-import Image from "next/image";
+import Footer from "@/components/Footer";
+import Hero from "@/components/Hero";
+import ProjectsBoard from "@/components/ProjectsBoard";
+import SectionReveal from "@/components/SectionReveal";
+
+const projects = [
+  {
+    index: "001",
+    title: "ClearPA",
+    tags: ["Healthcare AI", "Ophthalmology", "Claude API"],
+    description:
+      "AI prior authorization assistant for ophthalmology practices. Upload a patient chart, paste the payer questionnaire — Claude answers every question in 30 seconds in the exact language insurers approve. Won MAISI track at UM Claude Builder Club Hackathon 2026.",
+    status: "live" as const,
+    link: "https://github.com/patttw-ux/clearpa",
+  },
+  {
+    index: "002",
+    title: "Ventori",
+    tags: ["AI Agent", "Inventory Management", "SMB Retail"],
+    description:
+      "AI operations agent for small retail stores — the COO they can't afford. Analyzes sales velocity, predicts demand, flags dead stock, and drafts purchase orders automatically on owner approval. Built for my family's lighting store.",
+    status: "building" as const,
+    link: null,
+  },
+  {
+    index: "003",
+    title: "Persist",
+    tags: ["Consumer Healthcare", "SaaS", "Jac"],
+    description:
+      "Autonomous PA appeal agent built in Jac — an agentic programming language developed at University of Michigan. Parses denial letters, drafts appeals, scores approval viability, and monitors CMS deadlines. Built at JacHacks 2026.",
+    status: "soon" as const,
+    link: "https://github.com/patttw-ux/persist",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <main style={{ position: "relative" }}>
+      <Hero />
+      <div style={{ position: "relative", zIndex: 10, background: "#0a0b0f" }}>
+        <SectionReveal
+          index="/ 01"
+          eyebrow="ABOUT"
+          headline="Industrial focus with creative range."
+          body="Industrial & Operations Engineering at Michigan, with a lens on systems, entrepreneurship, and building products people actually use."
+          accentWord="creative"
         />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <section className="px-7 pb-24 pt-8 md:px-16">
+          <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.3em] text-accent">
+            / 02 — WORK
+          </p>
+          <h2 className="font-display text-[72px] leading-none tracking-tight text-ink">
+            Projects.
+          </h2>
+          <div className="mt-6 h-px w-full bg-ink/10" />
+
+          <ProjectsBoard projects={projects} className="mt-10" />
+        </section>
+
+        <Footer />
+      </div>
+    </main>
   );
 }
