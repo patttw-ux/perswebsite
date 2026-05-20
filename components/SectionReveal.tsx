@@ -13,6 +13,10 @@ type SectionRevealProps = {
   body: string;
   align?: "left" | "right";
   accentWord?: string;
+  /** Word clip reveal duration (default 0.4s). */
+  wordDuration?: number;
+  /** Delay between each word (default 0.05s). */
+  wordStagger?: number;
 };
 
 type HeadlineToken = {
@@ -49,6 +53,8 @@ export default function SectionReveal({
   body,
   align = "left",
   accentWord,
+  wordDuration = 0.4,
+  wordStagger = 0.05,
 }: SectionRevealProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const metaRef = useRef<HTMLDivElement | null>(null);
@@ -84,13 +90,13 @@ export default function SectionReveal({
       },
     });
 
-    tl.to(meta, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" });
+    tl.to(meta, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" });
     tl.to(
       wordInners,
       {
         clipPath: "inset(0 0 0% 0)",
-        duration: 0.65,
-        stagger: 0.06,
+        duration: wordDuration,
+        stagger: wordStagger,
         ease: "power4.out",
       },
       "-=0.15"
@@ -100,17 +106,17 @@ export default function SectionReveal({
       {
         opacity: 1,
         filter: "blur(0px)",
-        duration: 0.8,
+        duration: 0.4,
         ease: "power2.out",
       },
-      "+=0.3"
+      "+=0.05"
     );
 
     return () => {
       tl.scrollTrigger?.kill();
       tl.kill();
     };
-  }, [headline, body, accentWord]);
+  }, [headline, body, accentWord, wordDuration, wordStagger]);
 
   const justify = align === "right" ? "md:ml-auto" : "";
 

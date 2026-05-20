@@ -18,6 +18,15 @@ const config: Config = {
         display: ["Instrument Serif", "Georgia", "serif"],
         mono: ["JetBrains Mono", "ui-monospace", "monospace"],
       },
+      keyframes: {
+        "marquee-scroll": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
+      },
+      animation: {
+        "marquee-scroll": "marquee-scroll 40s linear infinite",
+      },
     },
   },
   plugins: [],

@@ -10,7 +10,7 @@ import type { ReactNode } from "react";
 export default function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   return (
-    <div key={pathname} className="relative min-h-0">
+    <div key={pathname} className="relative min-h-screen">
       {children}
     </div>
   );

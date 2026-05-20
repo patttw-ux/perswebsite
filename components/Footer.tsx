@@ -11,26 +11,8 @@ function LinkedInIcon() {
   );
 }
 
-function MailIcon() {
-  return (
-    <svg
-      className="h-6 w-6 shrink-0"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <rect width="20" height="16" x="2" y="4" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-    </svg>
-  );
-}
-
-const LINKEDIN_PLACEHOLDER = "https://linkedin.com/in/YOUR_LINKEDIN";
-const EMAIL_PLACEHOLDER = "YOUR_EMAIL";
+const LINKEDIN_URL = "https://linkedin.com/in/patrick--wang/";
+const GITHUB_URL = "https://github.com/patttw-ux";
 
 export default function Footer() {
   return (
@@ -50,7 +32,7 @@ export default function Footer() {
 
         <div className="flex flex-col gap-4 md:min-w-[280px]">
           <a
-            href={LINKEDIN_PLACEHOLDER}
+            href={LINKEDIN_URL}
             target="_blank"
             rel="noopener noreferrer"
             data-cursor="link"
@@ -60,19 +42,22 @@ export default function Footer() {
             LinkedIn
           </a>
           <a
-            href={`mailto:${EMAIL_PLACEHOLDER}`}
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             data-cursor="link"
-            className="magnetic group inline-flex w-full items-center justify-center gap-3 border border-ink px-6 py-4 font-mono text-[11px] uppercase tracking-wider text-ink transition-colors hover:border-accent hover:bg-accent"
+            className="font-mono text-[11px] uppercase tracking-wider text-ink transition-colors hover:text-accent"
           >
-            <MailIcon />
-            Email
+            GITHUB ↗
           </a>
+          <p className="font-mono text-[11px] uppercase tracking-wider text-ink">
+            patwang@umich.edu
+          </p>
         </div>
       </div>
 
       <div className="flex flex-col gap-4 border-t border-ink/10 py-6 px-7 sm:flex-row sm:items-center sm:justify-between md:px-16">
         <p className="font-mono text-[10px] text-dim">© 2025 Patrick Wang</p>
-        <p className="font-mono text-[10px] text-dim">Built with Next.js + Spline</p>
       </div>
     </footer>
   );

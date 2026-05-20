@@ -28,8 +28,9 @@ const projects = [
     tags: ["Consumer Healthcare", "SaaS", "Jac"],
     description:
       "Autonomous PA appeal agent built in Jac — an agentic programming language developed at University of Michigan. Parses denial letters, drafts appeals, scores approval viability, and monitors CMS deadlines. Built at JacHacks 2026.",
-    status: "soon" as const,
+    status: "live" as const,
     link: "https://github.com/patttw-ux/persist",
+    videoUrl: "https://www.youtube.com/embed/1jH-H-h2Y2c",
   },
 ];
 
@@ -46,7 +47,7 @@ export default function Home() {
           accentWord="creative"
         />
 
-        <section className="px-7 pb-24 pt-8 md:px-16">
+        <section id="work" className="px-7 pb-24 pt-8 md:px-16">
           <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.3em] text-accent">
             / 02 — WORK
           </p>

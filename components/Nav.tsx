@@ -2,20 +2,22 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const items = [
   { label: "INDEX", href: "/" },
-  { label: "WORK", href: "/projects" },
+  { label: "WORK", href: "/#work" },
   { label: "ABOUT", href: "/about" },
-  { label: "CONTACT", href: "#contact" },
+  { label: "CONTACT", href: "mailto:patwang@umich.edu" },
 ] as const;
 
-function isActive(pathname: string, hash: string, href: string) {
-  if (href.startsWith("#")) {
-    return hash === href;
+function isActive(pathname: string, href: string) {
+  if (href.startsWith("mailto:")) {
+    return false;
   }
   if (href === "/") {
+    return pathname === "/";
+  }
+  if (href === "/#work") {
     return pathname === "/";
   }
   return pathname === href;
@@ -23,19 +25,11 @@ function isActive(pathname: string, hash: string, href: string) {
 
 export default function Nav() {
   const pathname = usePathname();
-  const [hash, setHash] = useState("");
-
-  useEffect(() => {
-    setHash(typeof window !== "undefined" ? window.location.hash : "");
-    const onHashChange = () => setHash(window.location.hash);
-    window.addEventListener("hashchange", onHashChange);
-    return () => window.removeEventListener("hashchange", onHashChange);
-  }, []);
 
   return (
     <nav className="pointer-events-auto flex gap-8">
       {items.map((item) => {
-        const active = isActive(pathname, hash, item.href);
+        const active = isActive(pathname, item.href);
         return (
           <Link
             key={item.href}

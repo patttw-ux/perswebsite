@@ -9,6 +9,7 @@ html {
 
 body {
   overflow-x: hidden;
+  overflow-y: auto;
   background-color: #0a0b0f;
   cursor: none;
 }
@@ -59,23 +60,6 @@ a[href*="spline.design"] {
 
 .pulse-available {
   animation: pulse-available 2s ease-in-out infinite;
-}
-
-.marquee-root:hover .marquee-track {
-  animation-play-state: paused;
-}
-
-.marquee-track {
-  animation: marquee-scroll 40s linear infinite;
-}
-
-@keyframes marquee-scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
 }
 
 @layer utilities {

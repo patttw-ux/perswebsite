@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import type { ReactNode, Ref } from "react";
+import { useState, type ReactNode, type Ref } from "react";
 
 export type ProjectCardProps = {
   index: string;
@@ -8,6 +10,7 @@ export type ProjectCardProps = {
   description?: string;
   status: "live" | "wip" | "building" | "soon";
   link?: string | null;
+  videoUrl?: string;
   variant?: "pinned" | "solo";
   className?: string;
   pinRef?: Ref<HTMLSpanElement>;
@@ -38,6 +41,9 @@ function StatusBadge({ status }: { status: ProjectCardProps["status"] }) {
 const cardClassName =
   "group relative block max-w-[min(100%,320px)] border border-[rgba(242,239,228,0.22)] bg-[rgba(242,239,228,0.025)] px-8 py-7 shadow-[0_6px_16px_rgba(0,0,0,0.45)] transition-[border-color,background-color] duration-300 hover:border-[rgba(242,239,228,0.45)] hover:bg-[rgba(242,239,228,0.05)]";
 
+const watchDemoClassName =
+  "border border-dim/20 px-2 py-1 font-mono text-[9px] uppercase text-dim transition-colors hover:border-accent/40 hover:text-ink";
+
 export default function ProjectCard({
   index,
   title,
@@ -45,10 +51,13 @@ export default function ProjectCard({
   description,
   status,
   link,
+  videoUrl,
   variant = "pinned",
   className = "",
   pinRef,
 }: ProjectCardProps) {
+  const [videoOpen, setVideoOpen] = useState(false);
+
   const inner: ReactNode = (
     <>
       {variant === "pinned" ? (
@@ -82,22 +91,86 @@ export default function ProjectCard({
         ))}
       </div>
       <StatusBadge status={status} />
+      {videoUrl ? (
+        <button
+          type="button"
+          className={`mt-4 ${watchDemoClassName}`}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setVideoOpen(true);
+          }}
+        >
+          ▶ Watch Demo
+        </button>
+      ) : null}
     </>
   );
+
+  const videoModal =
+    videoOpen && videoUrl ? (
+      <div
+        className="fixed inset-0 z-[100000] flex items-center justify-center p-6"
+        style={{
+          backdropFilter: "blur(12px)",
+          background: "rgba(10,11,15,0.85)",
+        }}
+        onClick={() => setVideoOpen(false)}
+        role="dialog"
+        aria-modal
+        aria-label={`${title} demo video`}
+      >
+        <div
+          className="relative w-full overflow-hidden bg-black"
+          style={{
+            maxWidth: "min(92vw, 1100px)",
+            aspectRatio: "16 / 9",
+            height: "auto",
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            type="button"
+            className="absolute right-2 top-2 z-10 font-mono text-[12px] text-ink/80 transition-colors hover:text-ink"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setVideoOpen(false);
+            }}
+            aria-label="Close video"
+          >
+            ✕
+          </button>
+          <iframe
+            className="h-full w-full"
+            src={`${videoUrl}?autoplay=1&controls=1&modestbranding=1`}
+            title={`${title} demo`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      </div>
+    ) : null;
 
   const combinedClassName = `${cardClassName} ${className}`.trim();
 
   if (link) {
     return (
-      <Link href={link} className={combinedClassName} data-cursor="view">
-        {inner}
-      </Link>
+      <>
+        <Link href={link} className={combinedClassName} data-cursor="view">
+          {inner}
+        </Link>
+        {videoModal}
+      </>
     );
   }
 
   return (
-    <article className={combinedClassName} data-cursor="view">
-      {inner}
-    </article>
+    <>
+      <article className={combinedClassName} data-cursor="view">
+        {inner}
+      </article>
+      {videoModal}
+    </>
   );
 }

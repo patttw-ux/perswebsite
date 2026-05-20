@@ -10,7 +10,6 @@ import {
 } from "react";
 import gsap from "gsap";
 import Marquee from "@/components/Marquee";
-import Nav from "@/components/Nav";
 
 const SITE_BG = "#0a0b0f";
 const DOT_COLOR = "242, 239, 228";
@@ -169,6 +168,32 @@ export default function Hero() {
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const bottomTextRef = useRef<HTMLDivElement | null>(null);
   const [heroInView, setHeroInView] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
+  const [clockTime, setClockTime] = useState("00:00:00");
+
+  useEffect(() => {
+    const formatTime = () => {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, "0");
+      const m = String(now.getMinutes()).padStart(2, "0");
+      const s = String(now.getSeconds()).padStart(2, "0");
+      return `${h}:${m}:${s}`;
+    };
+
+    setClockTime(formatTime());
+    const id = setInterval(() => setClockTime(formatTime()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > window.innerHeight * 0.15);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -227,13 +252,26 @@ export default function Hero() {
     opacity: heroInView ? 1 : 0,
   };
 
+  const cornerFadeStyle: CSSProperties = {
+    opacity: scrolled ? 0 : 1,
+    transition: "opacity 0.3s ease",
+  };
+
   return (
     <section
       ref={sectionRef}
-      className="pointer-events-none overflow-visible"
-      style={{ position: "relative", height: "100svh" }}
+      className="pointer-events-none flex h-[100svh] flex-col overflow-visible"
+      style={{ position: "relative" }}
     >
       <DotGridCanvas />
+
+      <p
+        className="pointer-events-none fixed right-[28px] top-[28px] z-20 font-mono text-[11px] uppercase tracking-[0.2em] text-dim"
+        style={cornerFadeStyle}
+        aria-hidden
+      >
+        {clockTime}
+      </p>
 
       <div
         className="pointer-events-none fixed bottom-0 left-[62vw] top-[15vh] z-[6]"
@@ -262,46 +300,33 @@ export default function Hero() {
         </div>
       </div>
 
-      <div
-        className="pointer-events-none fixed bottom-0 left-0 right-0 z-[8]"
-        style={heroVisibilityStyle}
-      >
-        <Marquee />
-      </div>
-
-      <div
-        style={{
-          height: "100svh",
-          display: "block",
-          position: "relative",
-          zIndex: 1,
-          pointerEvents: "none",
-        }}
-      />
+      <div className="min-h-0 flex-1" aria-hidden />
 
       <div
         ref={overlayRef}
         className="pointer-events-none fixed inset-0 z-20"
         style={heroVisibilityStyle}
       >
-        <div className="hero-text-block pointer-events-none fixed left-[28px] top-[28px] flex flex-col gap-[10px]">
-          <div className="flex items-center gap-3">
-            <span className="h-2 w-2 animate-[blink_1.6s_steps(2)_infinite] bg-accent" />
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-dim">
-              PW / IOE · UNIVERSITY OF MICHIGAN
-            </p>
+        <div
+          className="hero-text-block pointer-events-none fixed left-[28px] top-[28px] flex flex-col gap-[10px]"
+          style={cornerFadeStyle}
+        >
+          <div className="flex items-start gap-3">
+            <span className="mt-[3px] h-2 w-2 shrink-0 animate-[blink_1.6s_steps(2)_infinite] bg-accent" />
+            <div className="flex flex-col gap-[4px]">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em]">
+                PATRICK WANG
+              </p>
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-dim">
+                NEW YORK ✈ ANN ARBOR, University of Michigan
+              </p>
+            </div>
           </div>
           <div className="flex items-center gap-2">
             <span className="pulse-available h-[6px] w-[6px] shrink-0 rounded-full bg-accent" />
-            <p className="font-mono text-[9px] uppercase tracking-widest text-accent">
-              AVAILABLE FOR PROJECTS
+            <p className="font-mono text-[9px] tracking-widest text-accent">
+              building, learning, exploring
             </p>
-          </div>
-        </div>
-
-        <div className="hero-text-block pointer-events-none fixed right-[28px] top-[28px]">
-          <div className="pointer-events-auto">
-            <Nav />
           </div>
         </div>
       </div>
@@ -328,6 +353,10 @@ export default function Hero() {
           </span>
         </h1>
         <div className="mt-8 h-px w-[180px] bg-[rgba(242,239,228,0.2)]" />
+      </div>
+
+      <div className="relative z-[25] mt-auto w-full shrink-0 overflow-visible bg-bg">
+        <Marquee />
       </div>
     </section>
   );
