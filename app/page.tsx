@@ -43,7 +43,7 @@ export default function Home() {
           index="/ 01"
           eyebrow="ABOUT"
           headline="Industrial focus with creative range."
-          body="Industrial & Operations Engineering at Michigan, with a lens on systems, entrepreneurship, and building products people actually use."
+          body="IOE at Michigan. I grew up in my family's lighting store learning that operations is everything — now I'm building software to fix the broken systems that hold small businesses and healthcare back. I think in sprints, ship fast, and care about things that actually work."
           accentWord="creative"
         />
 

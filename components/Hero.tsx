@@ -16,9 +16,9 @@ const DOT_COLOR = "242, 239, 228";
 const CELL = 28;
 const BASE_OPACITY = 0.12;
 const BASE_RADIUS = 1.2;
-const TORCH_RADIUS = 120;
-const TORCH_OPACITY = 0.42;
-const TORCH_RADIUS_MAX = 2.4;
+const INFLUENCE_RADIUS = 120;
+const PULL_ALPHA = 0.5;
+const PULL_SCALE = 2.2;
 const LERP = 0.14;
 const BRIGHT_THRESHOLD = BASE_OPACITY * 1.35;
 const PULSE_CYCLE_MS = 3500;
@@ -110,11 +110,10 @@ function DotGridCanvas() {
         let targetOpacity = BASE_OPACITY;
         let targetRadius = BASE_RADIUS;
 
-        if (dist < TORCH_RADIUS) {
-          const t = 1 - dist / TORCH_RADIUS;
-          const ease = t * t;
-          targetOpacity = BASE_OPACITY + ease * (TORCH_OPACITY - BASE_OPACITY);
-          targetRadius = BASE_RADIUS + ease * (TORCH_RADIUS_MAX - BASE_RADIUS);
+        if (dist < INFLUENCE_RADIUS) {
+          const pull = 1 - dist / INFLUENCE_RADIUS;
+          targetOpacity = BASE_OPACITY + pull * PULL_ALPHA;
+          targetRadius = BASE_RADIUS + pull * PULL_SCALE;
         }
 
         dot.opacity += (targetOpacity - dot.opacity) * LERP;
@@ -274,28 +273,38 @@ export default function Hero() {
       </p>
 
       <div
-        className="pointer-events-none fixed bottom-0 left-[62vw] top-[15vh] z-[6]"
-        style={heroVisibilityStyle}
+        className="pointer-events-none fixed left-[62vw] z-[6] m-0 h-[75vh] p-0"
+        style={{ ...heroVisibilityStyle, top: "12vh" }}
       >
-        <div className="relative h-full">
+        <div className="relative m-0 h-full w-full overflow-hidden p-0">
           <img
             src="/Prof_headshot_2025_-_Serious.jpg"
             alt=""
-            className="block h-full w-auto object-cover"
+            className="block h-full w-auto max-w-none object-cover"
             style={{
-              filter: "grayscale(100%) contrast(1.1)",
+              filter: "contrast(1.1)",
               objectPosition: "top center",
             }}
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-y-0 left-0 w-[200px]"
+            className="pointer-events-none absolute inset-x-0 top-0 z-[2] h-[200px]"
+            style={{ background: "linear-gradient(to bottom, #0a0b0f, transparent)" }}
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-y-0 left-0 z-[2] w-[200px]"
             style={{ background: "linear-gradient(to right, #0a0b0f, transparent)" }}
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-y-0 right-0 w-[120px]"
+            className="pointer-events-none absolute inset-y-0 right-0 z-[2] w-[120px]"
             style={{ background: "linear-gradient(to left, #0a0b0f, transparent)" }}
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute bottom-0 left-0 right-0 z-[2] h-[120px]"
+            style={{ background: "linear-gradient(to top, #0a0b0f, transparent)" }}
           />
         </div>
       </div>
@@ -312,7 +321,7 @@ export default function Hero() {
           style={cornerFadeStyle}
         >
           <div className="flex items-start gap-3">
-            <span className="mt-[3px] h-2 w-2 shrink-0 animate-[blink_1.6s_steps(2)_infinite] bg-accent" />
+            <span className="mt-[3px] h-2 w-2 shrink-0 animate-[blink_1.6s_steps(2)_infinite] bg-[#2155B8]" />
             <div className="flex flex-col gap-[4px]">
               <p className="font-mono text-[11px] uppercase tracking-[0.2em]">
                 PATRICK WANG
@@ -323,7 +332,7 @@ export default function Hero() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <span className="pulse-available h-[6px] w-[6px] shrink-0 rounded-full bg-accent" />
+            <span className="pulse-available h-[6px] w-[6px] shrink-0 rounded-full bg-[#2155B8]" />
             <p className="font-mono text-[9px] tracking-widest text-accent">
               building, learning, exploring
             </p>
@@ -345,7 +354,7 @@ export default function Hero() {
           </span>
           <br />
           <span className="inline-block overflow-hidden align-top">
-            <em className="hero-word-inner inline-block text-accent italic">Operations</em>
+            <em className="hero-word-inner inline-block italic text-[#2155B8]">Operations</em>
           </span>
           <br />
           <span className="inline-block overflow-hidden align-top">
