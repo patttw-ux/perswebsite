@@ -20,7 +20,7 @@ const projects = [
     description:
       "AI operations agent for small retail stores — the COO they can't afford. Analyzes sales velocity, predicts demand, flags dead stock, and drafts purchase orders automatically on owner approval. Built for my family's lighting store.",
     status: "building" as const,
-    link: null,
+    link: "https://github.com/patttw-ux/ventori",
   },
   {
     index: "003",
