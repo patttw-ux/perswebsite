@@ -57,7 +57,7 @@ export default function Footer() {
       </div>
 
       <div className="flex flex-col gap-4 border-t border-ink/10 py-6 px-7 sm:flex-row sm:items-center sm:justify-between md:px-16">
-        <p className="font-mono text-[10px] text-dim">© 2025 Patrick Wang</p>
+        <p className="font-mono text-[10px] text-dim">© 2026 Patrick Wang</p>
       </div>
     </footer>
   );

@@ -21,14 +21,14 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://YOUR_DOMAIN.com"),
+  metadataBase: new URL("https://patrick-wang.vercel.app"),
   title: { default: "Patrick Wang", template: "%s — Patrick Wang" },
   description:
     "Industrial & Operations Engineering + Entrepreneurship at University of Michigan. Building things worth building.",
   openGraph: {
     title: "Patrick Wang",
     description: "IOE + Entrepreneurship @ Michigan",
-    url: "https://YOUR_DOMAIN.com",
+    url: "https://patrick-wang.vercel.app",
     siteName: "Patrick Wang",
     locale: "en_US",
     type: "website",
